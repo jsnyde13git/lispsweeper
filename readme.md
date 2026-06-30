@@ -11,7 +11,7 @@ Minor modification may be needed to run on non-Linux systems or with other Commo
 
 To set up a beginner game, input the size as (9 9) and mine ratio as 12/100. Intermediate is size (16 16) and ratio 15/100; expert is size (30 16) and ratio 20/100. 
 
-To play, type (reveal x y) to reveal a square, (flag x y) to flag a square, and (? x y) to question-mark a square. The top-left corner is (0 0); the first index is the column, second is the row. The game ends when either a mine is revealed, or when all non-mine squares are revealed and all mine squares are flagged.
+To play, type (reveal x y) to reveal a square, (flag x y) to flag a square, and (? x y) to question-mark a square. Flags and ?s can be removed by typing flag or ? on a flagged/?ed square. The top-left corner is (0 0); the first index is the column, second is the row. The game ends when either a mine is revealed, or when all non-mine squares are revealed and all mine squares are flagged.
 
 ## Notes
 
