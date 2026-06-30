@@ -46,15 +46,27 @@
 (defun print-board (board)
     "Prints a 2d matrix, where elements are separated by spaces.
     Works best where every element is a single character."
-    (format t "   ")
+    (format t "      ")
+    (let ((len (length (car board))))
+        ; For each 10 length, print a number above the appropriate 0.
+        ; We skip the first 0.
+        (dotimes (n (floor (/ (- len 1) 10))) 
+            (format t "                  ~2a" (+ n 1))
+        )
+    )
+    (format t "~%    ")
+
+    ; 
     (reduce (lambda (n x) 
-                    (format t "~a " n)
+                    (format t "~a " (mod n 10))
                     (+ n 1))
             (car board)
             :initial-value 0)
     (format t "~%~%")
+
+    ; Print board, with left-side markers.
     (reduce (lambda (n lst)
-                    (format t "~a  " n) 
+                    (format t "~2a  " (mod n 100)) 
                     (mapcar (lambda (x) (format t "~a " x)) lst)
                     (format t "~%")
                     (+ n 1))
@@ -214,7 +226,7 @@
         (setf mine-ratio (read-ratio :prompt (format nil 
                                                 "Please enter the proportion of mines (ratio between 0 and 1). Examples:~%Beginner: 12/100~%Intermediate: 15/100~%Expert: 20/100")))
         (format t "~%")
-        
+
         ; Generate the board with the given ratio, then count & record the number of mines.
         (setf mine-matrix (mapcar (lambda (lst) (mapcar (lambda (_) (if (< mine-ratio (random 1.0)) nil t)) lst)) mine-matrix))
         (setf mine-ct (true-ct-mat mine-matrix))
