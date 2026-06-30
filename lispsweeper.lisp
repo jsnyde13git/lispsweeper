@@ -239,7 +239,7 @@
             ; Wait for player input.
             (let ((input (get-input 
                                     (lambda (cmd) (valid-cmdp cmd board-x board-y))
-                                    "Please enter a command and position. Commands are reveal, flag, and ?. Example: (reveal 0 0)" 
+                                    (format nil "Please enter a command and position. Commands are reveal, flag, and ?.~%The first coordinate is the column (x), second is the row (y). The top left is 0 0.~%Run flag or ? again to remove a flag or ?.~%Example: (reveal 0 0)")
                                     "Invalid command. Valid commands are reveal, flag, and ?. Example: (reveal 0 0)")))
                 
                 ; Process command
@@ -251,20 +251,29 @@
 
                         ; Reveal command.
                         ((eql (first input) 'reveal)
-                            ; Revealed square.
-                            ; First, check if mine. If mine, explode & end game.
-                            ; Otherwise, reveal the square.
-                            (if (get-matrix-elem mine-matrix x y)
-                                (progn 
-                                    (format t "Mine hit! 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥~%")
-                                    (setf end t))
-                                (progn 
-                                    ; Successfully revealed.
-                                    ; First, we set the appropriate position with the appropriate character.
-                                    ; If there are 0 mines, we use solid block █ and reveal its neighbors.
-                                    ; If there are a number of mines, we use that number.
-                                    (reveal-squares mine-matrix revealed-matrix x y))))
+                            (cond 
+                                ; Print an error if the square is a ?, flag, or already revealed.
+                                ((eql (get-matrix-elem revealed-matrix x y) #\?)
+                                 (format t "~%Cannot reveal a ?. Unmark it by using the ? command again.~%"))
+                                ((eql (get-matrix-elem revealed-matrix x y) #\!)
+                                 (format t "~%Cannot reveal a flag. Unmark it by using the flag command again.~%"))
+                                ((not (eql (get-matrix-elem revealed-matrix x y) #\░))
+                                 (format t "~%Cannot reveal an already-revealed tile.~%"))
 
+                                ; Unrevealed square; proceed.
+                                (t (if (get-matrix-elem mine-matrix x y)
+                                    ; First, check if mine. If mine, explode & end game.
+                                    ; Otherwise, reveal the square.
+                                    (progn 
+                                        (format t "Mine hit! 💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥💥~%")
+                                        (setf end t))
+                                    (progn 
+                                        ; Successfully revealed.
+                                        ; First, we set the appropriate position with the appropriate character.
+                                        ; If there are 0 mines, we use solid block █ and reveal its neighbors.
+                                        ; If there are a number of mines, we use that number.
+                                        (reveal-squares mine-matrix revealed-matrix x y))))))
+                            
                         ; Question mark command.
                         ((eql cmd '?)
                             (cond 
