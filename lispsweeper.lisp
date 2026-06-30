@@ -46,10 +46,21 @@
 (defun print-board (board)
     "Prints a 2d matrix, where elements are separated by spaces.
     Works best where every element is a single character."
-    (mapcar (lambda (lst) 
-                    (mapcar (lambda (x) (format t "~a " x)) lst) 
-                    (format t "~%")) 
-            board))
+    (format t "   ")
+    (reduce (lambda (n x) 
+                    (format t "~a " n)
+                    (+ n 1))
+            (car board)
+            :initial-value 0)
+    (format t "~%~%")
+    (reduce (lambda (n lst)
+                    (format t "~a  " n) 
+                    (mapcar (lambda (x) (format t "~a " x)) lst)
+                    (format t "~%")
+                    (+ n 1))
+            board
+            :initial-value 0)
+)
     
 
 (defun valid-wordp (symbol)
