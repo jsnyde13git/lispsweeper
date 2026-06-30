@@ -198,7 +198,8 @@
 ; Game is actually run here.
 (let (board-x board-y mine-ct (flag-ct 0)) 
     ; Read in the dimensions and record the values.
-    (let ((dimensions (read-int-pair :prompt "Please enter two numbers (x y) for the board dimensions:")))
+    (let ((dimensions (read-int-pair :prompt (format nil 
+                                                "Please enter two numbers (x y) for the board dimensions. Examples:~%Beginner: (9 9)~%Intermediate: (16 16)~%Expert: (30 16)"))))
         (setf board-x (car dimensions))
         (setf board-y (cadr dimensions)))
 
@@ -207,10 +208,12 @@
         ; Initialize the matrices.
         (setf mine-matrix (mapcar (lambda (_) (make-list board-x)) (make-list board-y)))
         (setf revealed-matrix (mapcar (lambda (_) (make-list board-x :initial-element #\░)) (make-list board-y))) ;(make-list board-y :initial-element (make-list board-x :initial-element #\░)))
-        
+        (format t "~%")
+
         ; Read in the ratio of mines from the user.
         (setf mine-ratio (read-ratio :prompt (format nil 
                                                 "Please enter the proportion of mines (ratio between 0 and 1). Examples:~%Beginner: 12/100~%Intermediate: 15/100~%Expert: 20/100")))
+        (format t "~%")
         
         ; Generate the board with the given ratio, then count & record the number of mines.
         (setf mine-matrix (mapcar (lambda (lst) (mapcar (lambda (_) (if (< mine-ratio (random 1.0)) nil t)) lst)) mine-matrix))
