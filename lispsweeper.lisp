@@ -1,4 +1,4 @@
-#! /usr/local/bin/sbcl --script
+#! /usr/bin/env -S sbcl --script
 ; A Lisp program to run a version of Minesweeper in a terminal.
 
 

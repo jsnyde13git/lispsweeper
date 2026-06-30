@@ -4,8 +4,8 @@ A CLI Minesweeper implementation in Common Lisp.
 
 ## Install & Run
 Lispsweeper is only guaranteed to work on Linux with SBCL.  
-Install SBCL, download the script, and mark it as executable with chmod u+x lispsweeper.lisp. Then, run with ./lispsweeper.lisp or sbcl --script lispsweeper.lisp (if the former doesn't work, the latter should). 
-Minor modification may be needed to run on non-Linux systems or with other Common Lisp implementations; most likely, remove the #! line at the beginning of the file, then use your Common Lisp implementation's preferred way to run Lisp source files.
+Install SBCL, download the script, and mark it as executable with chmod u+x lispsweeper.lisp. Then, run with ./lispsweeper.lisp or sbcl --script lispsweeper.lisp. 
+Minor modification may be needed to run on non-Linux systems or with other Common Lisp implementations; most likely, remove or edit the #! line at the beginning of the file, then use your Common Lisp implementation's preferred way to run Lisp source files.
 
 ## Gameplay
 
